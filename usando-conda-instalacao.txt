@@ -1,0 +1,17 @@
+conda create -n meu_app python=3.13
+conda activate meu_app
+conda config --env --add channels conda-forge
+conda config --env --set channel_priority strict
+
+
+conda install \
+  streamlit \
+  geopandas \
+  folium \
+  branca \
+  requests \
+  streamlit-folium \
+  keplergl
+
+
+pip install streamlit-keplergl

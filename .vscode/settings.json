@@ -1,0 +1,13 @@
+{
+    "r.lsp.promptToInstall": false,
+    // Permite entrar no terminal com o venv ativado
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+    "python.terminal.activateEnvironment": true,
+    "terminal.integrated.env.linux": {
+        "VIRTUAL_ENV": "${workspaceFolder}/.venv",
+        "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+  }
+  "python.condaPath": "/caminho/para/conda/condabin/conda",           // opcional, mas útil
+  "python.terminal.activateEnvironment": true,                       // ativa no novo terminal
+  "python.terminal.activateEnvInCurrentTerminal": true              // ativa no terminal já aberto (opcional)
+}
