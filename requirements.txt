@@ -4,10 +4,10 @@ requests
 
 # componentes testados
 
-## streamlit-folium
-folium
-branca
-streamlit-folium
+## streamlit-folium (muito lento)
+# folium
+# branca
+# streamlit-folium
 
 ##streamlit-keplergl (usando conda) (feito para jupiter)
 # keplergl
