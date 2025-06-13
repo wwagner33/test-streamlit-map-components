@@ -1,0 +1,11 @@
+[server]
+maxUploadSize = 200
+maxMessageSize = 200
+enableCORS = false
+headless = true
+enableXsrfProtection = false
+runOnSave = true
+port = 8501
+fileWatcherType = "auto"
+enableWebsocketCompression = false
+disconnectedSessionTTL = 120

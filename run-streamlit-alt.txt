@@ -1,0 +1,1 @@
+streamlit run app_streamlit_folium.py --logger.level error
