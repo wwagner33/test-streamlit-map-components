@@ -5,3 +5,6 @@ geopandas
 folium
 branca
 streamlit-folium
+selenium
+shapely
+fiona

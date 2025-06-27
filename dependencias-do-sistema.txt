@@ -1,0 +1,1 @@
+sudo dnf install -y gdal gdal-devel python3-gdal
