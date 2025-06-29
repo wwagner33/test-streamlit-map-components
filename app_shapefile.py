@@ -1,34 +1,15 @@
 # app_shapefile.py
 
 import streamlit as st
-import folium
 import geopandas as gpd
 import pandas as pd
-# from io import BytesIO
-# import zipfile
-# import os
-# import tempfile
 from pathlib import Path
 from streamlit_folium import st_folium
-from folium.plugins import Fullscreen
-from modules.data_loader import (
-    fetch_municipios_all,
-    fetch_geojson_por_municipio,
-)
 
 # Configuração da página
 st.set_page_config(page_title="Exportar por Tipo de Propriedade", layout="wide")
-st.title("📤 Exportar Propriedades por Tipo - Ceará")
+st.title("Exportar Propriedades por Tipo - Ceará")
 
-# Cores e categorias (com opção "Todas")
-CATEGORIAS = {
-    "Todas": {"cor": "#cccccc", "filtro": None},
-    "Pequena Propriedade < 1 MF": {"cor": "#fecc5c", "filtro": "Pequena Propriedade < 1 MF"},
-    "Pequena Propriedade": {"cor": "#fd8d3c", "filtro": "Pequena Propriedade"},
-    "Média Propriedade": {"cor": "#f03b20", "filtro": "Média Propriedade"},
-    "Grande Propriedade": {"cor": "#bd0026", "filtro": "Grande Propriedade"},
-    "Sem Classificação": {"cor": "#eeeee4", "filtro": "Sem Classificação"}
-}
 
 # Cria pasta de output
 OUTPUT_DIR = Path("output_shapes")
@@ -169,53 +150,17 @@ if st.button("Buscar Propriedades"):
                 use_container_width=True
             )
             
-            with st.expander("📈 Visualização Gráfica"):
+            with st.expander("Visualização Gráfica"):
                 if len(resumo_areas) > 1:
                     st.bar_chart(resumo_areas.set_index('Tipo de Propriedade')['% da Área Total'])
                 else:
                     st.write("Selecione 'Todas' para comparar categorias no gráfico")
         
-        # Seção do Mapa
-        st.subheader("🗺️ Mapa de Propriedades")
-        m = folium.Map(location=[-5.2, -39.0], zoom_start=7)
-        
-        if tipo_selecionado == "Todas":
-            # Mapa colorido por categoria quando mostrar todas
-            folium.GeoJson(
-                propriedades,
-                style_function=lambda x: {
-                    'fillColor': CATEGORIAS.get(x['properties'].get('categoria', 'Sem Classificação'), {}).get('cor', '#eeeeee'),
-                    'color': '#000',
-                    'weight': 0.5,
-                    'fillOpacity': 0.6
-                },
-                tooltip=folium.GeoJsonTooltip(
-                    fields=['nome_municipio', 'area', 'categoria'],
-                    aliases=['Município:', 'Área (ha):', 'Categoria:']
-                )
-            ).add_to(m)
-        else:
-            # Mapa com cor única quando uma categoria específica é selecionada
-            folium.GeoJson(
-                propriedades,
-                style_function=lambda x: {
-                    'fillColor': CATEGORIAS[tipo_selecionado]['cor'],
-                    'color': '#000',
-                    'weight': 0.5,
-                    'fillOpacity': 0.6
-                },
-                tooltip=folium.GeoJsonTooltip(
-                    fields=['nome_municipio', 'area', 'categoria'],
-                    aliases=['Município:', 'Área (ha):', 'Categoria:']
-                )
-            ).add_to(m)
-        
-        st_folium(m, width=800, height=500)
-        
+       
         # Seção de Dados Completos
-        with st.expander("📋 Ver dados completos"):
+        with st.expander("Ver dados completos"):
             st.dataframe(propriedades.drop(columns='geometry'))
         
         # Geração do Shapefile
-        if st.button("💾 Gerar Shapefile Local"):
+        if st.button("Gerar Shapefile Local"):
             gerar_shapefile_local(propriedades, tipo_selecionado)
